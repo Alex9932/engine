@@ -8,3 +8,9 @@ Last build: Release/libengine.so
 cd Release
 make all
 ```
+
+### Thirdparty
+https://github.com/ocornut/imgui
+https://github.com/CedricGuillemet/ImGuizmo
+https://gitlab.com/GroGy/im-neo-sequencer
+stb_image - v2.10
