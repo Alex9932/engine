@@ -5,6 +5,6 @@ Last build: Release/libengine.so
 
 ## Build:
 ```bash
-cd Reliase
+cd Release
 make all
 ```
