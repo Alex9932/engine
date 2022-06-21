@@ -7,13 +7,13 @@
 
 #define DLL_EXPORT
 
-#define RG_FORSE_GLM_FUNCTIONS
+#define RG_FORCE_GLM_FUNCTIONS
 
 #include <engine/core/math/vector.h>
 #include <engine/core/math/matrix.h>
 #include <SDL2/SDL.h>
 
-#ifdef RG_FORSE_GLM_FUNCTIONS
+#ifdef RG_FORCE_GLM_FUNCTIONS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -296,7 +296,7 @@ namespace Engine {
 
 		void quat_slerp(quat* dest, const quat& q1, const quat& q2, double lambda) {
 
-#ifdef RG_FORSE_GLM_FUNCTIONS
+#ifdef RG_FORCE_GLM_FUNCTIONS
 			// TODO temporary using glm's slerp function
 			glm::quat _q1;
 			glm::quat _q2;
@@ -350,7 +350,7 @@ namespace Engine {
 
 		void quat_mat4(quat* dest, const mat4& matrix) {
 
-#ifdef RG_FORSE_GLM_FUNCTIONS
+#ifdef RG_FORCE_GLM_FUNCTIONS
 			// TODO temporary using glm's quat_cast function
 			glm::mat4 mat;
 			SDL_memcpy(&mat[0][0], &matrix, sizeof(mat4));
