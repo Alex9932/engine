@@ -20,6 +20,7 @@ namespace Engine {
 		this->rotation.y = 0;
 		this->rotation.z = 0;
 		this->model_id = 0;
+		this->model_type = RG_MODEL_DEFAULT;
 		this->scale.x = 1;
 		this->scale.y = 1;
 		this->scale.z = 1;
@@ -75,8 +76,13 @@ namespace Engine {
 		return this->model_id;
 	}
 
-	void Object::SetModelID(Uint32 id) {
+	rgModelType Object::GetModelType() {
+		return this->model_type;
+	}
+
+	void Object::SetModelID(Uint32 id, rgModelType type) {
 		this->model_id = id;
+		this->model_type = type;
 	}
 
 }

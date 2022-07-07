@@ -13,12 +13,18 @@
 
 namespace Engine {
 
+	enum rgModelType {
+		RG_MODEL_DEFAULT = 0,
+		RG_MODEL_RIGGED = 1
+	};
+
 	class RG_DECLSPEC Object {
 		protected:
 			Math::vec3 position;
 			Math::vec3 rotation;
 			Math::mat4 transform;
 			Uint32 model_id;
+			rgModelType model_type;
 			Math::vec3 scale;
 
 		public:
@@ -35,7 +41,8 @@ namespace Engine {
 			void SetScale(const Math::vec3& scale);
 
 			Uint32 GetModelID();
-			void SetModelID(Uint32 id);
+			rgModelType GetModelType();
+			void SetModelID(Uint32 id, rgModelType type);
 	};
 
 }

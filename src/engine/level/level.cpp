@@ -20,6 +20,12 @@ namespace Engine {
 
 	}
 
+	void Level::Update() {
+		for (Uint32 i = 0; i < this->objects.size(); ++i) {
+			this->objects[i]->Update();
+		}
+	}
+
 	void Level::SpawnEntity(Entity* entity) {
 		this->objects.push_back(entity);
 	}

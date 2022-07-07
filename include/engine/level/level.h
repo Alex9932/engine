@@ -24,6 +24,8 @@ namespace Engine {
 			Level();
 			virtual ~Level();
 
+			void Update();
+
 			void SpawnEntity(Entity* entity);
 			Render::Model* GetGeometry();
 			void SetGeometry(Render::Model* geom);

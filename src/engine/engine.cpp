@@ -28,10 +28,10 @@
 
 #endif
 
-#define RG_BUILD         51
+#define RG_BUILD         54
 #define RG_VERSION_MAJ   0
 #define RG_VERSION_MIN   1
-#define RG_VERSION_PATCH 28
+#define RG_VERSION_PATCH 30
 
 static const Uint32 RG_SDL_INIT_CLIENT_FLAGS =
 	SDL_INIT_AUDIO |
