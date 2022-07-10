@@ -41,7 +41,10 @@ namespace Engine {
 
 		void InitOverlay() {
 			font = new Font("platform/msyh.ttf", 64);
-			SDL_memset(fps, 0, sizeof(double) * FPS_ARRAY);
+			for (Uint32 i = 0; i < FPS_ARRAY; ++i) {
+				fps[i] = 0.0;
+			}
+//			SDL_memset(fps, 0, sizeof(double) * FPS_ARRAY);
 		}
 
 		void RenderOverlay() {

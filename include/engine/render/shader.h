@@ -16,13 +16,16 @@
 namespace Engine {
 	namespace Render {
 
-		class RG_DECLSPEC Shader {
+		// !!! DEPRECATED !!!
+		// !!! DEPRECATED !!!
+		// !!! DEPRECATED !!!
+		class RG_DECLSPEC SShader {
 			private:
 				GLuint shader;
 
 			public:
-				Shader(String vs, String fs, String gs);
-				~Shader();
+				SShader(String vs, String fs, String gs);
+				~SShader();
 				void Start();
 				void Stop();
 

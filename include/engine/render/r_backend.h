@@ -9,6 +9,11 @@
 #define ENGINE_RENDER_R_BACKEND_H_
 
 #include <engine/engine.h>
+#include <engine/core/allocator.h>
+#include <engine/render/r_vertexbuffer.h>
+#include <engine/render/r_framebuffer.h>
+#include <engine/render/r_pipeline.h>
+#include <engine/render/r_shader.h>
 
 #define R_OPENGL_RENDERER
 
@@ -23,6 +28,16 @@ namespace Engine {
 		RG_DECLSPEC void MakeImguiBackend();
 
 		RG_DECLSPEC String GetRendererName();
+
+		// Objects
+		RG_DECLSPEC Vertexbuffer* MakeVertexbuffer(const VertexbufferInfo& info, Allocator* allocator);
+		RG_DECLSPEC void DeleteVertexbuffer(Vertexbuffer* vertexbuffer, Allocator* allocator);
+		RG_DECLSPEC Framebuffer* MakeFramebuffer(const FramebufferInfo& info, Allocator* allocator);
+		RG_DECLSPEC void DeleteFramebuffer(Framebuffer* framebuffer, Allocator* allocator);
+		RG_DECLSPEC Pipeline* MakePipeline(const PipelineInfo& info, Allocator* allocator);
+		RG_DECLSPEC void DeletePipeline(Pipeline* pipeline, Allocator* allocator);
+		RG_DECLSPEC Shader* MakeShader(const ShaderInfo& info, Allocator* allocator);
+		RG_DECLSPEC void DeleteShader(Shader* shader, Allocator* allocator);
 
 	}
 }

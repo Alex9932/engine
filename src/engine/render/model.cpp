@@ -39,7 +39,7 @@ namespace Engine {
 			}
 		}
 
-		void Model::Draw(Shader* shader) {
+		void Model::Draw(SShader* shader) {
 			for (Uint32 i = 0; i < meshes.size(); ++i) {
 				meshes[i]->Draw(shader);
 			}
@@ -90,7 +90,7 @@ namespace Engine {
 			}
 		}
 
-		void RiggedModel::Draw(Shader* shader) {
+		void RiggedModel::Draw(SShader* shader) {
 			for (Uint32 i = 0; i < meshes.size(); ++i) {
 				meshes[i]->Draw(shader);
 			}

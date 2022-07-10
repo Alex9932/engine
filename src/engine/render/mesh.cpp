@@ -38,7 +38,7 @@ namespace Engine {
 			glDeleteVertexArrays(1, &vao);
 		}
 
-		void Mesh::Draw(Shader* shader) {
+		void Mesh::Draw(SShader* shader) {
 			shader->SetVec4(shader->GetUniformLocation("d_color"), material->GetColor());
 			shader->SetVec3(shader->GetUniformLocation("a_color"), material->GetAmbient());
 			shader->SetVec3(shader->GetUniformLocation("s_color"), material->GetSpecular());
@@ -85,7 +85,7 @@ namespace Engine {
 			glDeleteVertexArrays(1, &vao);
 		}
 
-		void RiggedMesh::Draw(Shader* shader) {
+		void RiggedMesh::Draw(SShader* shader) {
 			shader->SetVec4(shader->GetUniformLocation("d_color"), material->GetColor());
 			shader->SetVec3(shader->GetUniformLocation("a_color"), material->GetAmbient());
 			shader->SetVec3(shader->GetUniformLocation("s_color"), material->GetSpecular());

@@ -16,7 +16,7 @@
 namespace Engine {
 	namespace Render {
 
-		static Shader* r2d_shader;
+		static SShader* r2d_shader;
 		static GLuint vao;
 		static GLuint vbo;
 		static Uint32 vertex = 0;
@@ -30,7 +30,7 @@ namespace Engine {
 
 		void InitializeR2D() {
 			local_buffer = (R2D_VERTEX*)malloc(sizeof(R2D_VERTEX) * RG_R2D_MAX_VERTECES);
-			r2d_shader = new Shader("platform/shaders/r2d.vs", "platform/shaders/r2d.fs", NULL);
+			r2d_shader = new SShader("platform/shaders/r2d.vs", "platform/shaders/r2d.fs", NULL);
 			glGenVertexArrays(1, &vao);
 			glBindVertexArray(vao);
 			glGenBuffers(1, &vbo);

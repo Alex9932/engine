@@ -26,7 +26,7 @@ namespace Engine {
 			Engine::Math::vec4 color;
 		};
 
-		static Shader* font_shader;
+		static SShader* font_shader;
 		static GLuint vao;
 		static GLuint vbo;
 		static Uint32 vertex = 0;
@@ -38,7 +38,7 @@ namespace Engine {
 
 		void InitFontRenderer() {
 			local_buffer = (FR_VERTEX*)malloc(sizeof(FR_VERTEX) * RG_FR_MAX_VERTECES);
-			font_shader = new Shader("platform/shaders/font.vs", "platform/shaders/font.fs", NULL);
+			font_shader = new SShader("platform/shaders/font.vs", "platform/shaders/font.fs", NULL);
 			glGenVertexArrays(1, &vao);
 			glBindVertexArray(vao);
 			glGenBuffers(1, &vbo);

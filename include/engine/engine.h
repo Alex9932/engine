@@ -11,22 +11,45 @@
 #define ENGINE_H_
 
 #define RG_INLINE inline
-#ifdef _WIN32
-#define RG_FORCE_INLINE inline
-#define RG_PLATFORM_NAME "WIN32"
-#define RG_PLATFORM_WINDOWS
-#include <windows.h>
-#ifdef DLL_EXPORT
-#define RG_DECLSPEC __declspec(dllexport)
+#if _WIN32 || _WIN64
+	#define RG_FORCE_INLINE inline
+	#define RG_PLATFORM_NAME "WIN32"
+	#define RG_PLATFORM_WINDOWS
+	#include <windows.h>
+	#ifdef DLL_EXPORT
+		#define RG_DECLSPEC __declspec(dllexport)
+	#else
+		#define RG_DECLSPEC __declspec(dllimport)
+	#endif
+	#if _WIN64
+		#define RG_ENV64
+	#else
+		#define RG_ENV32
+	#endif
+#elif __GNUC__
+	#define RG_FORCE_INLINE inline __attribute__((always_inline))
+	#define RG_PLATFORM_NAME "LINUX"
+	#define RG_PLATFORM_LINUX
+	#define RG_DECLSPEC
+	#if __x86_64__ || __ppc64__
+		#define RG_ENV64
+	#else
+		#define RG_ENV32
+	#endif
 #else
-#define RG_DECLSPEC __declspec(dllimport)
+	#define RG_FORCE_INLINE inline
+	#define RG_PLATFORM_NAME "UNKNOWN"
+	#define RG_DECLSPEC
+	#define RG_ENV32
+	#error "INVALID ENVIRONMENT"
 #endif
+
+#ifdef RG_ENV64
+#define RG_CASTADDR(a) ((void*)(Uint64)a)
 #else
-#define RG_FORCE_INLINE inline __attribute__((always_inline))
-#define RG_PLATFORM_NAME "LINUX"
-#define RG_PLATFORM_LINUX
-#define RG_DECLSPEC
+#define RG_CASTADDR(a) ((void*)a)
 #endif
+
 
 typedef const char* String;
 typedef const wchar_t* WString;
@@ -41,6 +64,7 @@ typedef const wchar_t* WString;
 								if(c == 0) Engine::rg_assert_message = msg;                      \
 								SDL_assert_always(c)
 
+// TODO !!! Remove this !!!
 extern RG_DECLSPEC String RG_PROFILER_SEGMENT_wait_jobs;
 extern RG_DECLSPEC String RG_PROFILER_SEGMENT_main_update;
 extern RG_DECLSPEC String RG_PROFILER_SEGMENT_sound;

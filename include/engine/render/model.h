@@ -28,7 +28,7 @@ namespace Engine {
 			public:
 				Model(Geometry* geom);
 				virtual ~Model();
-				void Draw(Shader* shader);
+				void Draw(SShader* shader);
 				std::vector<Mesh*>& GetMeshes();
 				GLuint GetVBO();
 				Engine::Render::Vertex* GetGeometryPtr();
@@ -47,7 +47,7 @@ namespace Engine {
 			public:
 				RiggedModel(RiggedGeometry* geom, Skeleton* skeleton);
 				virtual ~RiggedModel();
-				void Draw(Shader* shader);
+				void Draw(SShader* shader);
 				std::vector<RiggedMesh*>& GetMeshes();
 				GLuint GetVBO();
 				Skeleton* GetSkeleton();

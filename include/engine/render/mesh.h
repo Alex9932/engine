@@ -39,7 +39,7 @@ namespace Engine {
 			public:
 				Mesh(Material* material, GLuint vbo, Uint32 count, Uint32* indices);
 				virtual ~Mesh();
-				void Draw(Shader* shader);
+				void Draw(SShader* shader);
 				Material* GetMaterial();
 		};
 
@@ -53,7 +53,7 @@ namespace Engine {
 			public:
 				RiggedMesh(Material* material, GLuint vbo, GLuint w_vbo, Uint32 count, Uint32* indices);
 				virtual ~RiggedMesh();
-				void Draw(Shader* shader);
+				void Draw(SShader* shader);
 				Material* GetMaterial();
 		};
 

@@ -15,6 +15,10 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 
+#include <engine/render_gl/vertexbuffer.h>
+#include <engine/render_gl/framebuffer.h>
+#include <engine/render_gl/shader.h>
+
 namespace Engine {
 	namespace Render {
 
@@ -81,6 +85,43 @@ namespace Engine {
 
 		String GetRendererName() {
 			return "OpenGL";
+		}
+
+		// Objects
+		Vertexbuffer* MakeVertexbuffer(const VertexbufferInfo& info, Allocator* allocator) {
+			return new(allocator->Allocate(sizeof(GLVertexbuffer))) GLVertexbuffer(info);
+		}
+
+		void DeleteVertexbuffer(Vertexbuffer* vertexbuffer, Allocator* allocator) {
+			vertexbuffer->~Vertexbuffer();
+			allocator->Deallocate(vertexbuffer);
+		}
+
+		Framebuffer* MakeFramebuffer(const FramebufferInfo& info, Allocator* allocator) {
+			return new(allocator->Allocate(sizeof(GLFramebuffer))) GLFramebuffer(info);
+		}
+
+		void DeleteFramebuffer(Framebuffer* framebuffer, Allocator* allocator) {
+			framebuffer->~Framebuffer();
+			allocator->Deallocate(framebuffer);
+		}
+
+		Pipeline* MakePipeline(const PipelineInfo& info, Allocator* allocator) {
+			return NULL;
+		}
+
+		void DeletePipeline(Pipeline* pipeline, Allocator* allocator) {
+			pipeline->~Pipeline();
+			allocator->Deallocate(pipeline);
+		}
+
+		Shader* MakeShader(const ShaderInfo& info, Allocator* allocator) {
+			return new(allocator->Allocate(sizeof(GLShader))) GLShader(info);
+		}
+
+		void DeleteShader(Shader* shader, Allocator* allocator) {
+			shader->~Shader();
+			allocator->Deallocate(shader);
 		}
 
 	}

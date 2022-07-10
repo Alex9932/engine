@@ -43,7 +43,7 @@ namespace Engine {
 			Engine::Filesystem::FreeResource(data);
 		}
 
-		Shader::Shader(String vs, String fs, String gs) {
+		SShader::SShader(String vs, String fs, String gs) {
 			RG_ASSERT(vs);
 			RG_ASSERT(fs);
 
@@ -94,67 +94,67 @@ namespace Engine {
 			}
 		}
 
-		Shader::~Shader() {
+		SShader::~SShader() {
 			glDeleteProgram(this->shader);
 		}
 
-		void Shader::Start() {
+		void SShader::Start() {
 			glUseProgram(this->shader);
 		}
 
-		void Shader::Stop() {
+		void SShader::Stop() {
 			glUseProgram(0);
 		}
 
-		GLuint Shader::GetProgram() {
+		GLuint SShader::GetProgram() {
 			return this->shader;
 		}
 
-		GLuint Shader::GetUniformLocation(String name) {
+		GLuint SShader::GetUniformLocation(String name) {
 			return glGetUniformLocation(this->shader, name);
 		}
 
-		GLuint Shader::GetUniformBlockIndex(String name) {
+		GLuint SShader::GetUniformBlockIndex(String name) {
 			return glGetUniformBlockIndex(this->shader, name);
 		}
 
-		void Shader::SetFloat(GLuint location, float value) {
+		void SShader::SetFloat(GLuint location, float value) {
 			glUniform1f(location, value);
 		}
 
-		void Shader::SetInt(GLuint location, int value) {
+		void SShader::SetInt(GLuint location, int value) {
 			glUniform1i(location, value);
 		}
 
-		void Shader::SetVec2(GLuint location, const Engine::Math::vec2& value) {
+		void SShader::SetVec2(GLuint location, const Engine::Math::vec2& value) {
 			glUniform2f(location, value.x, value.y);
 		}
 
-		void Shader::SetVec3(GLuint location, const Engine::Math::vec3& value) {
+		void SShader::SetVec3(GLuint location, const Engine::Math::vec3& value) {
 			glUniform3f(location, value.x, value.y, value.z);
 		}
 
-		void Shader::SetVec4(GLuint location, const Engine::Math::vec4& value) {
+		void SShader::SetVec4(GLuint location, const Engine::Math::vec4& value) {
 			glUniform4f(location, value.x, value.y, value.x, value.w);
 		}
 
-		void Shader::SetIVec2(GLuint location, const Engine::Math::ivec2& value) {
+		void SShader::SetIVec2(GLuint location, const Engine::Math::ivec2& value) {
 			glUniform2i(location, value.x, value.y);
 		}
 
-		void Shader::SetIVec3(GLuint location, const Engine::Math::ivec3& value) {
+		void SShader::SetIVec3(GLuint location, const Engine::Math::ivec3& value) {
 			glUniform3i(location, value.x, value.y, value.z);
 		}
 
-		void Shader::SetIVec4(GLuint location, const Engine::Math::ivec4& value) {
+		void SShader::SetIVec4(GLuint location, const Engine::Math::ivec4& value) {
 			glUniform4i(location, value.x, value.y, value.x, value.w);
 		}
 
-		void Shader::SetMat4(GLuint location, Engine::Math::mat4* value) {
+		void SShader::SetMat4(GLuint location, Engine::Math::mat4* value) {
 			glUniformMatrix4fv(location, 1, GL_FALSE, (float*)value);
 		}
 
-		void Shader::SetUniformBlock(GLuint location, GLuint buffer_index) {
+		void SShader::SetUniformBlock(GLuint location, GLuint buffer_index) {
 			glUniformBlockBinding(this->shader, location, buffer_index);
 		}
 
