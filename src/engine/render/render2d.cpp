@@ -29,6 +29,10 @@ namespace Engine {
 		static R2D_VERTEX* local_buffer;
 
 		void InitializeR2D() {
+
+			// TODO Use Pipeline
+			// use render2d_allocator
+
 			local_buffer = (R2D_VERTEX*)malloc(sizeof(R2D_VERTEX) * RG_R2D_MAX_VERTECES);
 			r2d_shader = new SShader("platform/shaders/r2d.vs", "platform/shaders/r2d.fs", NULL);
 			glGenVertexArrays(1, &vao);
@@ -57,7 +61,7 @@ namespace Engine {
 			glDeleteVertexArrays(1, &vao);
 			glDeleteBuffers(1, &vbo);
 			delete r2d_shader;
-			free(local_buffer);
+			free(local_buffer); // TODO
 		}
 
 		void R2D_BindTexture(GLuint tex) {

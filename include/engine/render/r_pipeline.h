@@ -15,14 +15,31 @@
 namespace Engine {
 	namespace Render {
 
+		enum PolygonMode {
+			RG_PM_FILL = 0,
+			RG_PM_LINE,
+			RG_PM_POINT
+		};
+
+		enum CullFace {
+			RG_CF_NONE = 0,
+			RG_CF_FRONT,
+			RG_CF_BACK
+		};
+
 		typedef struct PipelineInfo {
 			Shader* shader;
 			Framebuffer* framebuffer;
+			PolygonMode polygonMode;
+			CullFace cullFace;
+
 		} PipelineInfo;
 
 		class RG_DECLSPEC Pipeline {
 
 			protected:
+				PolygonMode mode = RG_PM_FILL;
+				CullFace face    = RG_CF_NONE;
 
 			public:
 				Pipeline(const PipelineInfo& info) {}

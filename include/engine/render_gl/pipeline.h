@@ -20,8 +20,8 @@ namespace Engine {
 		class RG_DECLSPEC GLPipeline : public Pipeline {
 
 			protected:
-				GLShader* shader;
-				GLFramebuffer* fb;
+				GLShader* shader  = NULL;
+				GLFramebuffer* fb = NULL;
 
 			public:
 				GLPipeline(const PipelineInfo& info);

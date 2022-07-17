@@ -76,5 +76,9 @@ namespace Engine {
 			glDeleteProgram(this->shader);
 		}
 
+		void GLShader::Start() {
+			glUseProgram(this->shader);
+		}
+
 	}
 }

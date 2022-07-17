@@ -28,7 +28,7 @@ namespace Engine {
 		AllocBlock block;
 		block.len = len;
 		block.addr = malloc(len);
-//		rgLogError(RG_LOG_SYSTEM, "ALLOC (%s): New: 0x%x", name, block.addr);
+		//rgLogError(RG_LOG_SYSTEM, "ALLOC (%s): New: 0x%x", name, block.addr);
 		blocks.push_back(block);
 		return block.addr;
 	}

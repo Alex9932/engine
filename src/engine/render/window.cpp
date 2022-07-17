@@ -35,7 +35,7 @@ namespace Engine {
 			Render::SetupBackend();
 
 			if(!Engine::IsDebug()) {
-				w_startup = SDL_CreateWindow("rgEngine - init", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 300, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_BORDERLESS);
+				w_startup = SDL_CreateWindow("rgEngine - init", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 300, SDL_WINDOW_SHOWN | SDL_WINDOW_BORDERLESS);
 				SDL_Renderer *ren = SDL_CreateRenderer(w_startup, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 				SDL_Surface *bmp = SDL_LoadBMP("platform/logo.bmp");
 				SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
@@ -59,7 +59,11 @@ namespace Engine {
 			w_current_width = w_init_width;
 			w_current_height = w_init_height;
 
+#if defined(R_OPENGL_RENDERER)
 			w_window_ptr = SDL_CreateWindow("rgEngine", 5, 5, 650, 500, SDL_WINDOW_OPENGL);
+#elif defined(R_VULKAN_RENDERER)
+			w_window_ptr = SDL_CreateWindow("rgEngine", 5, 5, 650, 500, SDL_WINDOW_VULKAN);
+#endif
 			SDL_assert(w_window_ptr);
 
 			Render::InitializeBackend();

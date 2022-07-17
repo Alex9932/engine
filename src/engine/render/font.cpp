@@ -11,6 +11,7 @@
 #include <engine/core/filesystem.h>
 #include <engine/core/logger.h>
 #include <engine/core/utf8.h>
+#include <engine/core/allocator.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -22,6 +23,8 @@ namespace Engine {
 		static Uint32 counter = 0;
 		static UTF8Decoder* utf_decoder;
 
+		static STDAllocator* allocator;
+
 		Font::Font(String file, Uint32 scale) {
 			if(ft == NULL || counter == 0) {
 				rgLogInfo(RG_LOG_DEBUG, "Init library");
@@ -31,6 +34,7 @@ namespace Engine {
 					return;
 				}
 
+				allocator = new STDAllocator("FT_ALLOCATOR");
 				utf_decoder = Engine::GetUTF8Decoder();
 			}
 
@@ -51,10 +55,13 @@ namespace Engine {
 //			rgLogInfo(RG_LOG_RENDER, "Font encoding: 0x%x", );
 
 			FT_Set_Pixel_Sizes(face, 0, this->scale);
-			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+//			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+			// TODO rewrite this (use texture)
+
 			glGenTextures(1, &this->font_atlas);
 			glBindTexture(GL_TEXTURE_2D, this->font_atlas);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, this->scale * F_ATLAS_WIDTH, this->scale * F_ATLAS_HEIGHT, 0, GL_RED, GL_UNSIGNED_BYTE, NULL);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->scale * F_ATLAS_WIDTH, this->scale * F_ATLAS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 //			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -77,9 +84,20 @@ namespace Engine {
 				int xoffset = i % F_ATLAS_WIDTH;
 				int yoffset = i / F_ATLAS_WIDTH;
 
+				FT_Bitmap* bitmap = &face->glyph->bitmap;
+				Uint8* new_buffer = (Uint8*)allocator->Allocate(bitmap->width*bitmap->rows * 4);
+				for (Uint32 j = 0; j < bitmap->width*bitmap->rows; ++j) {
+					new_buffer[j*4 + 0] = bitmap->buffer[j];
+					new_buffer[j*4 + 1] = bitmap->buffer[j];
+					new_buffer[j*4 + 2] = bitmap->buffer[j];
+					new_buffer[j*4 + 3] = bitmap->buffer[j];
+				}
+
 				glTexSubImage2D(GL_TEXTURE_2D, 0, xoffset * this->scale, yoffset * this->scale,
 					face->glyph->bitmap.width, face->glyph->bitmap.rows,
-					GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
+					GL_RGBA, GL_UNSIGNED_BYTE, new_buffer);
+
+				allocator->Deallocate(new_buffer);
 			}
 			FT_Done_Face(face);
 

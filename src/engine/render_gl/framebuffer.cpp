@@ -33,10 +33,55 @@ namespace Engine {
 				FramebufferColorAttachment* desc = &info.color_destriptors[i];
 				glBindTexture(GL_TEXTURE_2D, this->attachments[i]);
 
-				// TODO
-				GLint in_format = GL_RGBA16F;
-				GLenum format   = GL_RGBA;
-				GLenum type     = GL_FLOAT;
+				GLint in_format;
+				GLenum format;
+				GLenum type;
+
+				if(desc->type == DATATYPE_FLOAT) {
+					switch (desc->format) {
+						case FORMAT_R:
+							in_format = GL_R16F;
+							format = GL_RED;
+							break;
+						case FORMAT_RG:
+							in_format = GL_RG16F;
+							format = GL_RG;
+							break;
+						case FORMAT_RGB:
+							in_format = GL_RGB16F;
+							format = GL_RGB;
+							break;
+						case FORMAT_RGBA:
+							in_format = GL_RGBA16F;
+							format = GL_RGBA;
+							break;
+						default:
+							break;
+					}
+					type = GL_FLOAT;
+				} else if (desc->type == DATATYPE_UINT8) {
+					switch (desc->format) {
+						case FORMAT_R:
+							in_format = GL_RED;
+							format = GL_RED;
+							break;
+						case FORMAT_RG:
+							in_format = GL_RG;
+							format = GL_RG;
+							break;
+						case FORMAT_RGB:
+							in_format = GL_RGB;
+							format = GL_RGB;
+							break;
+						case FORMAT_RGBA:
+							in_format = GL_RGBA;
+							format = GL_RGBA;
+							break;
+						default:
+							break;
+					}
+					type = GL_UNSIGNED_BYTE;
+				}
 
 				glTexImage2D(GL_TEXTURE_2D, 0, in_format, this->width, this->height, 0, format, type, NULL);
 

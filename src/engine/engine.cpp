@@ -28,10 +28,10 @@
 
 #endif
 
-#define RG_BUILD         54
+#define RG_BUILD         58
 #define RG_VERSION_MAJ   0
 #define RG_VERSION_MIN   2
-#define RG_VERSION_PATCH 0
+#define RG_VERSION_PATCH 3
 
 static const Uint32 RG_SDL_INIT_CLIENT_FLAGS =
 	SDL_INIT_AUDIO |
@@ -329,7 +329,7 @@ namespace Engine {
 
 		if (game_ptr->isClient()) {
 			SDL_ShowSimpleMessageBox(
-				SDL_MESSAGEBOX_ERROR, "Error",
+				SDL_MESSAGEBOX_ERROR, "rgEngine error",
 				message, Engine::Window::GetWindow());
 		}
 

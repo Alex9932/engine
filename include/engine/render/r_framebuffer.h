@@ -10,31 +10,19 @@
 
 #include <SDL2/SDL.h>
 #include <engine/engine.h>
+#include <engine/render/r_texture.h>
 
 namespace Engine {
 	namespace Render {
 
-		enum AttachmentType {
-			ATTACHMENT_COLOR = 0,
-			ATTACHMENT_DEPTH
-		};
-
-		enum AttachmentFormat {
-			ATTACHMENT_R = 0,
-			ATTACHMENT_RG,
-			ATTACHMENT_RGB,
-			ATTACHMENT_RGBA,
-			ATTACHMENT_DEPTH24
-		};
-
 		typedef struct FramebufferColorAttachment {
-			AttachmentType type;
-			AttachmentFormat format;
+			TextureDataType type;
+			TextureFormat format;
 		} FramebufferColorAttachment;
 
 		typedef struct FramebufferDepthAttachment {
-			AttachmentType type;
-			AttachmentFormat format;
+			TextureDataType type;
+			TextureFormat format;
 		} FramebufferDepthAttachment;
 
 		typedef struct FramebufferInfo {

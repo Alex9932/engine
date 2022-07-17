@@ -5,25 +5,23 @@
  *      Author: alex9932
  */
 
-#ifndef ENGINE_RENDER_GL_SHADER_H_
-#define ENGINE_RENDER_GL_SHADER_H_
+#ifndef ENGINE_RENDER_VK_SHADER_H_
+#define ENGINE_RENDER_VK_SHADER_H_
 
 #include <engine/engine.h>
-#include <GL/glew.h>
 
 #include <engine/render/r_shader.h>
 
 namespace Engine {
 	namespace Render {
 
-		class RG_DECLSPEC GLShader : public Shader {
+		class RG_DECLSPEC VKShader : public Shader {
 
 			protected:
-				GLuint shader;
 
 			public:
-				GLShader(const ShaderInfo& info);
-				virtual ~GLShader();
+				VKShader(const ShaderInfo& info);
+				~VKShader();
 
 				void Start();
 

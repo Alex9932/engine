@@ -18,6 +18,8 @@
 #include <engine/render_gl/vertexbuffer.h>
 #include <engine/render_gl/framebuffer.h>
 #include <engine/render_gl/shader.h>
+#include <engine/render_gl/pipeline.h>
+#include <engine/render_gl/texture.h>
 
 namespace Engine {
 	namespace Render {
@@ -107,7 +109,7 @@ namespace Engine {
 		}
 
 		Pipeline* MakePipeline(const PipelineInfo& info, Allocator* allocator) {
-			return NULL;
+			return new(allocator->Allocate(sizeof(GLPipeline))) GLPipeline(info);
 		}
 
 		void DeletePipeline(Pipeline* pipeline, Allocator* allocator) {
@@ -122,6 +124,15 @@ namespace Engine {
 		void DeleteShader(Shader* shader, Allocator* allocator) {
 			shader->~Shader();
 			allocator->Deallocate(shader);
+		}
+
+		Texture* MakeTexture(const TextureInfo& info, Allocator* allocator) {
+			return new(allocator->Allocate(sizeof(GLTexture))) GLTexture(info);
+		}
+
+		void DeleteTexture(Texture* texture, Allocator* allocator) {
+			texture->~Texture();
+			allocator->Deallocate(texture);
 		}
 
 	}

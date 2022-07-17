@@ -14,8 +14,10 @@
 #include <engine/render/r_framebuffer.h>
 #include <engine/render/r_pipeline.h>
 #include <engine/render/r_shader.h>
+#include <engine/render/r_texture.h>
 
 #define R_OPENGL_RENDERER
+//#define R_VULKAN_RENDERER // TODO
 
 namespace Engine {
 	namespace Render {
@@ -38,6 +40,8 @@ namespace Engine {
 		RG_DECLSPEC void DeletePipeline(Pipeline* pipeline, Allocator* allocator);
 		RG_DECLSPEC Shader* MakeShader(const ShaderInfo& info, Allocator* allocator);
 		RG_DECLSPEC void DeleteShader(Shader* shader, Allocator* allocator);
+		RG_DECLSPEC Texture* MakeTexture(const TextureInfo& info, Allocator* allocator);
+		RG_DECLSPEC void DeleteTexture(Texture* texture, Allocator* allocator);
 
 	}
 }

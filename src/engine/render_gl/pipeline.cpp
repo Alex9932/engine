@@ -13,6 +13,8 @@ namespace Engine {
 		GLPipeline::GLPipeline(const PipelineInfo& info) : Pipeline(info) {
 			this->shader = (GLShader*)info.shader;
 			this->fb = (GLFramebuffer*)info.framebuffer;
+			this->mode = info.polygonMode;
+			this->face = info.cullFace;
 		}
 
 		GLPipeline::~GLPipeline() {
