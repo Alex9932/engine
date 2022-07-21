@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lSDL2 -lopenal -lfreetype -lGLEW -lGL
+LIBS := -lSDL2 -lopenal -lfreetype -lGLEW -lGL -lvulkan
 

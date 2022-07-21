@@ -11,6 +11,8 @@
 #include <engine/engine.h>
 #include <GL/glew.h>
 
+#include <engine/render/r_texture.h>
+
 
 #define F_ATLAS_WIDTH  32
 #define F_ATLAS_HEIGHT 64
@@ -29,14 +31,14 @@ namespace Engine {
 
 		class RG_DECLSPEC Font {
 			private:
-				GLuint font_atlas;
+				Texture* font_atlas;
 				Uint32 scale;
 				Glyph chars[F_ATLAS_WIDTH * F_ATLAS_HEIGHT];
 
 			public:
 				Font(String file, Uint32 scale);
 				virtual ~Font();
-				GLuint GetAtlas();
+				Texture* GetAtlas();
 				Uint32 GetScale();
 				Glyph* GetGlyphs();
 				float GetRawStringLength(const Uint16* str, float scale);

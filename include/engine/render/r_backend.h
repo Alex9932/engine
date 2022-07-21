@@ -17,7 +17,8 @@
 #include <engine/render/r_texture.h>
 
 #define R_OPENGL_RENDERER
-//#define R_VULKAN_RENDERER // TODO
+//#define R_VULKAN_RENDERER
+//#define RG_GRAPHICSAPI_DEBUG
 
 namespace Engine {
 	namespace Render {
@@ -30,6 +31,8 @@ namespace Engine {
 		RG_DECLSPEC void MakeImguiBackend();
 
 		RG_DECLSPEC String GetRendererName();
+		RG_DECLSPEC String GetRendererDescription();
+		RG_DECLSPEC Framebuffer* GetDefaultFramebuffer();
 
 		// Objects
 		RG_DECLSPEC Vertexbuffer* MakeVertexbuffer(const VertexbufferInfo& info, Allocator* allocator);

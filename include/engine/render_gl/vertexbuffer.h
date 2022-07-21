@@ -26,7 +26,7 @@ namespace Engine {
 				GLVertexbuffer(const VertexbufferInfo& info);
 				virtual ~GLVertexbuffer();
 				virtual void Draw(Uint32 start, Uint32 count);
-				virtual void WriteVertexbuffer(float* vertices, Uint32 offset, Uint32 size);
+				virtual void WriteVertexbuffer(void* vertices, Uint32 offset, Uint32 size);
 				virtual void WriteIndexbuffer(void* indices, Uint32 offset, Uint32 size);
 
 		};

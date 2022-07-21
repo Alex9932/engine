@@ -27,6 +27,8 @@ namespace Engine {
 
 				virtual void SubData(Uint32 xoffset, Uint32 yoffset, Uint32 width, Uint32 height, void* data);
 
+				RG_INLINE GLuint GetGLTextureID() { return texture; }
+
 		};
 
 	}

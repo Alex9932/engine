@@ -22,12 +22,15 @@ namespace Engine {
 			protected:
 				GLShader* shader  = NULL;
 				GLFramebuffer* fb = NULL;
+				GLuint gl_face;
+				GLuint gl_mode;
 
 			public:
 				GLPipeline(const PipelineInfo& info);
 				~GLPipeline();
 
 				virtual void Bind();
+				virtual void AttachTexture(Uint32 idx, Texture* texture);
 
 		};
 

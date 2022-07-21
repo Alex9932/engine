@@ -18,13 +18,14 @@ namespace Engine {
 		class RG_DECLSPEC VKPipeline : public Pipeline {
 
 			protected:
-				VkRenderPass renderpass;
+				VkRenderPass renderpass = VK_NULL_HANDLE;
 
 			public:
 				VKPipeline(const PipelineInfo& info);
 				~VKPipeline();
 
 				virtual void Bind();
+				virtual void AttachTexture(Uint32 idx, Texture* texture);
 
 				RG_INLINE VkRenderPass GetRenderPass() {
 					return renderpass;

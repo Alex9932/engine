@@ -6,6 +6,9 @@
  */
 
 #include <engine/render_vk/pipeline.h>
+#include <engine/render_vk/vk_utils.h>
+
+#ifdef R_VULKAN_RENDERER
 
 namespace Engine {
 	namespace Render {
@@ -20,5 +23,10 @@ namespace Engine {
 		void VKPipeline::Bind() {
 		}
 
+		void VKPipeline::AttachTexture(Uint32 idx, Texture* texture) {
+		}
+
 	}
 }
+
+#endif

@@ -12,7 +12,7 @@
 #include <engine/core/logger.h>
 #include <engine/core/utf8.h>
 #include <engine/core/allocator.h>
-
+#include <engine/render/r_backend.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -23,7 +23,7 @@ namespace Engine {
 		static Uint32 counter = 0;
 		static UTF8Decoder* utf_decoder;
 
-		static STDAllocator* allocator;
+		static STDAllocator* allocator = NULL;
 
 		Font::Font(String file, Uint32 scale) {
 			if(ft == NULL || counter == 0) {
@@ -34,7 +34,10 @@ namespace Engine {
 					return;
 				}
 
-				allocator = new STDAllocator("FT_ALLOCATOR");
+				if(allocator == NULL) {
+					allocator = new STDAllocator("RG_FT");
+					RegisterAllocator(allocator);
+				}
 				utf_decoder = Engine::GetUTF8Decoder();
 			}
 
@@ -59,15 +62,24 @@ namespace Engine {
 
 			// TODO rewrite this (use texture)
 
-			glGenTextures(1, &this->font_atlas);
-			glBindTexture(GL_TEXTURE_2D, this->font_atlas);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->scale * F_ATLAS_WIDTH, this->scale * F_ATLAS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-//			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			TextureInfo info;
+			info.width  = this->scale * F_ATLAS_WIDTH;
+			info.height = this->scale * F_ATLAS_HEIGHT;
+			info.type   = DATATYPE_UINT8;
+			info.format = FORMAT_RGBA;
+			info.filter = FILTER_LINEAR;
+			info.data   = NULL;
+			font_atlas = MakeTexture(info, allocator);
+
+//			glGenTextures(1, &this->font_atlas);
+//			glBindTexture(GL_TEXTURE_2D, this->font_atlas);
+//			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->scale * F_ATLAS_WIDTH, this->scale * F_ATLAS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+//			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+//			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+////			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+////			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 			for (wchar_t i = 0; i < F_ATLAS_WIDTH * F_ATLAS_HEIGHT; i++) {
 				if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
@@ -93,9 +105,11 @@ namespace Engine {
 					new_buffer[j*4 + 3] = bitmap->buffer[j];
 				}
 
-				glTexSubImage2D(GL_TEXTURE_2D, 0, xoffset * this->scale, yoffset * this->scale,
-					face->glyph->bitmap.width, face->glyph->bitmap.rows,
-					GL_RGBA, GL_UNSIGNED_BYTE, new_buffer);
+				font_atlas->SubData(xoffset * this->scale, yoffset * this->scale,
+						face->glyph->bitmap.width, face->glyph->bitmap.rows, new_buffer);
+//				glTexSubImage2D(GL_TEXTURE_2D, 0, xoffset * this->scale, yoffset * this->scale,
+//					face->glyph->bitmap.width, face->glyph->bitmap.rows,
+//					GL_RGBA, GL_UNSIGNED_BYTE, new_buffer);
 
 				allocator->Deallocate(new_buffer);
 			}
@@ -107,7 +121,8 @@ namespace Engine {
 		}
 
 		Font::~Font() {
-			glDeleteTextures(1, &this->font_atlas);
+			DeleteTexture(font_atlas, allocator);
+//			glDeleteTextures(1, &this->font_atlas);
 			counter--;
 			rgLogInfo(RG_LOG_DEBUG, "~Counter: %d", counter);
 
@@ -117,7 +132,7 @@ namespace Engine {
 			}
 		}
 
-		GLuint Font::GetAtlas() {
+		Texture* Font::GetAtlas() {
 			return this->font_atlas;
 		}
 

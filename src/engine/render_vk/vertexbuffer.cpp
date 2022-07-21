@@ -6,6 +6,10 @@
  */
 
 #include <engine/render_vk/vertexbuffer.h>
+#include <engine/render_vk/vk_utils.h>
+
+#ifdef R_VULKAN_RENDERER
+
 #include <engine/engine.h>
 
 namespace Engine {
@@ -24,7 +28,7 @@ namespace Engine {
 		void VKVertexbuffer::Draw(Uint32 start, Uint32 count) {
 		}
 
-		void VKVertexbuffer::WriteVertexbuffer(float* vertices, Uint32 offset, Uint32 size) {
+		void VKVertexbuffer::WriteVertexbuffer(void* vertices, Uint32 offset, Uint32 size) {
 		}
 
 		void VKVertexbuffer::WriteIndexbuffer(void* indices, Uint32 offset, Uint32 size) {
@@ -32,3 +36,5 @@ namespace Engine {
 
 	}
 }
+
+#endif

@@ -85,16 +85,18 @@ namespace Engine {
 		}
 
 		void GLVertexbuffer::Draw(Uint32 start, Uint32 count) {
-			glBindVertexArray(vao);
-			glDrawElements(GL_TRIANGLES, count, i_size, RG_CASTADDR(start));
+			glBindVertexArray(this->vao);
+			glDrawElements(GL_TRIANGLES, count, this->i_size, RG_CASTADDR(start*this->i_type));
 		}
 
-		void GLVertexbuffer::WriteVertexbuffer(float* vertices, Uint32 offset, Uint32 size) {
+		void GLVertexbuffer::WriteVertexbuffer(void* vertices, Uint32 offset, Uint32 size) {
+			glBindVertexArray(this->vao);
 			glBindBuffer(GL_ARRAY_BUFFER, this->buffers[0]);
 			glBufferSubData(GL_ARRAY_BUFFER, offset, size, vertices);
 		}
 
 		void GLVertexbuffer::WriteIndexbuffer(void* indices, Uint32 offset, Uint32 size) {
+			glBindVertexArray(this->vao);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->buffers[1]);
 			glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, size, indices);
 		}

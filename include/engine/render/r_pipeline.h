@@ -46,6 +46,7 @@ namespace Engine {
 				virtual ~Pipeline() {}
 
 				virtual void Bind() {}
+				virtual void AttachTexture(Uint32 idx, Texture* texture) {}
 
 		};
 

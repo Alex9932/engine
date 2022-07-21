@@ -20,6 +20,7 @@
 #include <engine/core/command/command.h>
 #include <engine/render/window.h>
 #include <engine/render/render.h>
+#include <engine/render/r_backend.h>
 #include <engine/sound/sound.h>
 
 #ifdef RG_PLATFORM_WINDOWS
@@ -28,10 +29,10 @@
 
 #endif
 
-#define RG_BUILD         58
+#define RG_BUILD         63
 #define RG_VERSION_MAJ   0
 #define RG_VERSION_MIN   2
-#define RG_VERSION_PATCH 3
+#define RG_VERSION_PATCH 4
 
 static const Uint32 RG_SDL_INIT_CLIENT_FLAGS =
 	SDL_INIT_AUDIO |
@@ -82,7 +83,6 @@ namespace Engine {
 
 	static char version_str[32];
 	static char platform_str[32];
-	static char opengl_str[256];
 	static char user_profile_str[64];
 
 	static bool is_arch64 = false;
@@ -120,8 +120,6 @@ namespace Engine {
 
 		return SDL_ASSERTION_BREAK;
 	}
-
-	bool BaseGame::isClient() { return is_client; }
 
 	void Initialize(BaseGame& game) {
 		game_ptr = &game;
@@ -186,11 +184,7 @@ namespace Engine {
 		Thread::Initialize();
 		if(game_ptr->isClient()) {
 			Window::Show();
-			sprintf(opengl_str, "%s %s", glGetString(GL_RENDERER), glGetString(GL_VERSION));
-			rgLogInfo(RG_LOG_RENDER, "OpenGL: %s", GetGLInfo());
 			Render::Initialize();
-		} else {
-			sprintf(opengl_str, "- (no renderer)");
 		}
 
 		game_ptr->Initialize();
@@ -262,7 +256,11 @@ namespace Engine {
 
 		rgLogError(RG_LOG_ERROR, "~ ~ ~ SYSTEM ~ ~ ~");
 		rgLogError(RG_LOG_ERROR, "Engine version: %d.%d.%d", RG_VERSION_MAJ, RG_VERSION_MIN, RG_VERSION_PATCH);
-		rgLogError(RG_LOG_ERROR, "Rendering backend: %s", GetGLInfo());
+		if(game_ptr->isClient()) {
+			rgLogError(RG_LOG_ERROR, "Rendering backend: %s, %s", Render::GetRendererName(), Render::GetRendererDescription());
+		} else {
+			rgLogError(RG_LOG_ERROR, "Rendering backend: NO RENDERER");
+		}
 		rgLogError(RG_LOG_ERROR, "Platform: %s", GetEnginePlatform());
 
 	}
@@ -324,8 +322,9 @@ namespace Engine {
 	}
 
 	void HandleError(String message) {
-//		rgLogError(RG_LOG_SYSTEM, " ~ ~ ~ ~ ~\n");
+
 		rgLogError(RG_LOG_SYSTEM, "Error: %s\n", message);
+		RG_LogState();
 
 		if (game_ptr->isClient()) {
 			SDL_ShowSimpleMessageBox(
@@ -374,10 +373,6 @@ namespace Engine {
 
 	String GetEnginePlatform() {
 		return platform_str;
-	}
-
-	String GetGLInfo() {
-		return opengl_str;
 	}
 
 	String GetUsername() {

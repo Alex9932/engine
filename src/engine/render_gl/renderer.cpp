@@ -24,8 +24,16 @@
 namespace Engine {
 	namespace Render {
 
+		static char description[256];
+
 		static SDL_GLContext w_glcontext = NULL;
 		static Uint32 swap_int = 0;
+
+		static Framebuffer* framebuffer;
+
+		static void MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
+		    rgLogError(RG_LOG_RENDER, "GL: %d => %s", type, message);
+		}
 
 		void SetupBackend() {
 			// Use OpenGL 3.3
@@ -62,11 +70,23 @@ namespace Engine {
 			Window::GetWindowSize(&size);
 			glClearColor(0, 0, 0, 1);
 			ViewportBackend(0, 0, size.x, size.y);
+
+#ifdef RG_GRAPHICSAPI_DEBUG
+			glEnable(GL_DEBUG_OUTPUT);
+			glDebugMessageCallback(MessageCallback, NULL);
+#endif
+
+			framebuffer = NULL;
+
+//			sprintf(description, "%s %s", glGetString(GL_VERSION), glGetString(GL_RENDERER));
+			sprintf(description, "%s", glGetString(GL_RENDERER));
+			rgLogInfo(RG_LOG_RENDER, "OpenGL: %s", description);
+			rgLogInfo(RG_LOG_RENDER, "Initialized OpenGL rendering backend");
 		}
 
 		void DestroyBackend() {
 			ImGui_ImplOpenGL3_Shutdown();
-			ImGui_ImplSDL2_Shutdown();
+			ImGui_ImplSDL2_Shutdown(); // @suppress("Invalid arguments")
 			SDL_GL_DeleteContext(w_glcontext);
 		}
 
@@ -81,12 +101,20 @@ namespace Engine {
 		}
 
 		void MakeImguiBackend() {
-			ImGui_ImplSDL2_InitForOpenGL(Window::GetWindow(), w_glcontext);
+			ImGui_ImplSDL2_InitForOpenGL(Window::GetWindow(), w_glcontext); // @suppress("Invalid arguments")
 			ImGui_ImplOpenGL3_Init("#version 150");
 		}
 
 		String GetRendererName() {
 			return "OpenGL";
+		}
+
+		String GetRendererDescription() {
+			return description;
+		}
+
+		Framebuffer* GetDefaultFramebuffer() {
+			return framebuffer;
 		}
 
 		// Objects

@@ -27,6 +27,8 @@ namespace Engine {
 
 				void Start();
 
+				RG_INLINE GLuint GetGLProgram() { return shader; }
+
 		};
 
 	}

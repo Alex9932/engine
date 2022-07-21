@@ -11,6 +11,7 @@
 #include <engine/engine.h>
 
 #include <engine/render/r_shader.h>
+#include <vulkan/vulkan.h>
 
 namespace Engine {
 	namespace Render {
@@ -18,12 +19,21 @@ namespace Engine {
 		class RG_DECLSPEC VKShader : public Shader {
 
 			protected:
+				VkShaderModule vs;
+				VkShaderModule fs;
+				VkPipelineShaderStageCreateInfo vsStageInfo;
+				VkPipelineShaderStageCreateInfo fsStageInfo;
 
 			public:
 				VKShader(const ShaderInfo& info);
 				~VKShader();
 
 				void Start();
+
+				RG_INLINE VkShaderModule GetVertexModule() { return this->vs; }
+				RG_INLINE VkShaderModule GetFragmentModule() { return this->fs; }
+				RG_INLINE VkPipelineShaderStageCreateInfo& GetVertexInfo() { return this->fsStageInfo; }
+				RG_INLINE VkPipelineShaderStageCreateInfo& GetFragmentInfo() { return this->fsStageInfo; }
 
 		};
 

@@ -9,6 +9,7 @@ CPP_SRCS += \
 ../imgui/imgui_draw.cpp \
 ../imgui/imgui_impl_opengl3.cpp \
 ../imgui/imgui_impl_sdl.cpp \
+../imgui/imgui_impl_vulkan.cpp \
 ../imgui/imgui_neo_internal.cpp \
 ../imgui/imgui_neo_sequencer.cpp \
 ../imgui/imgui_tables.cpp \
@@ -20,6 +21,7 @@ CPP_DEPS += \
 ./imgui/imgui_draw.d \
 ./imgui/imgui_impl_opengl3.d \
 ./imgui/imgui_impl_sdl.d \
+./imgui/imgui_impl_vulkan.d \
 ./imgui/imgui_neo_internal.d \
 ./imgui/imgui_neo_sequencer.d \
 ./imgui/imgui_tables.d \
@@ -31,6 +33,7 @@ OBJS += \
 ./imgui/imgui_draw.o \
 ./imgui/imgui_impl_opengl3.o \
 ./imgui/imgui_impl_sdl.o \
+./imgui/imgui_impl_vulkan.o \
 ./imgui/imgui_neo_internal.o \
 ./imgui/imgui_neo_sequencer.o \
 ./imgui/imgui_tables.o \
@@ -49,7 +52,7 @@ imgui/%.o: ../imgui/%.cpp imgui/subdir.mk
 clean: clean-imgui
 
 clean-imgui:
-	-$(RM) ./imgui/ImGuizmo.d ./imgui/ImGuizmo.o ./imgui/imgui.d ./imgui/imgui.o ./imgui/imgui_draw.d ./imgui/imgui_draw.o ./imgui/imgui_impl_opengl3.d ./imgui/imgui_impl_opengl3.o ./imgui/imgui_impl_sdl.d ./imgui/imgui_impl_sdl.o ./imgui/imgui_neo_internal.d ./imgui/imgui_neo_internal.o ./imgui/imgui_neo_sequencer.d ./imgui/imgui_neo_sequencer.o ./imgui/imgui_tables.d ./imgui/imgui_tables.o ./imgui/imgui_widgets.d ./imgui/imgui_widgets.o
+	-$(RM) ./imgui/ImGuizmo.d ./imgui/ImGuizmo.o ./imgui/imgui.d ./imgui/imgui.o ./imgui/imgui_draw.d ./imgui/imgui_draw.o ./imgui/imgui_impl_opengl3.d ./imgui/imgui_impl_opengl3.o ./imgui/imgui_impl_sdl.d ./imgui/imgui_impl_sdl.o ./imgui/imgui_impl_vulkan.d ./imgui/imgui_impl_vulkan.o ./imgui/imgui_neo_internal.d ./imgui/imgui_neo_internal.o ./imgui/imgui_neo_sequencer.d ./imgui/imgui_neo_sequencer.o ./imgui/imgui_tables.d ./imgui/imgui_tables.o ./imgui/imgui_widgets.d ./imgui/imgui_widgets.o
 
 .PHONY: clean-imgui
 

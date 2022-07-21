@@ -9,9 +9,10 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include src/engine/sound/subdir.mk
+-include src/engine/render_vk/subdir.mk
+-include src/engine/render_gl/subdir.mk
 -include src/engine/render/subdir.mk
 -include src/engine/level/subdir.mk
--include src/engine/core/thread/subdir.mk
 -include src/engine/core/math/subdir.mk
 -include src/engine/core/command/subdir.mk
 -include src/engine/core/subdir.mk

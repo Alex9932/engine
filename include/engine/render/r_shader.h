@@ -16,6 +16,8 @@ namespace Engine {
 		typedef struct ShaderInfo {
 			String vertex_path;
 			String fragment_path;
+			String vsName;
+			String fsName;
 		} ShaderInfo;
 
 		// TODO rewrite this

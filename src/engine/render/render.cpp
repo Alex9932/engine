@@ -14,9 +14,16 @@
 #include <engine/render/render2d.h>
 #include <GL/glew.h>
 
+#include <engine/render/r_backend.h>
+
 #include <imgui.h>
 #include <imgui_impl_sdl.h>
+#if defined(R_OPENGL_RENDERER)
 #include <imgui_impl_opengl3.h>
+#elif defined(R_VULKAN_RENDERER)
+#include <imgui_impl_vulkan.h>
+#include <engine/render_vk/vk_utils.h>
+#endif
 
 #define RG_RENDER_MAX_MODELS 1024
 
@@ -86,14 +93,22 @@ namespace Engine {
 		}
 
 		void ImGuiBegin() {
+#if defined(R_OPENGL_RENDERER)
 			ImGui_ImplOpenGL3_NewFrame(); // @suppress("Invalid arguments")
+#elif defined(R_VULKAN_RENDERER)
+			ImGui_ImplVulkan_NewFrame(); // @suppress("Invalid arguments")
+#endif
 			ImGui_ImplSDL2_NewFrame();    // @suppress("Invalid arguments")
 			ImGui::NewFrame();
 		}
 
 		void ImGuiEnd() {
 			ImGui::Render();
+#if defined(R_OPENGL_RENDERER)
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); // @suppress("Invalid arguments")
+#elif defined(R_VULKAN_RENDERER)
+			ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), GetVkCommandBuffer(), VK_NULL_HANDLE); // @suppress("Invalid arguments")
+#endif
 		}
 
 		Allocator* GetGeomAllocator() {

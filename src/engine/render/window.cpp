@@ -62,11 +62,12 @@ namespace Engine {
 #if defined(R_OPENGL_RENDERER)
 			w_window_ptr = SDL_CreateWindow("rgEngine", 5, 5, 650, 500, SDL_WINDOW_OPENGL);
 #elif defined(R_VULKAN_RENDERER)
-			w_window_ptr = SDL_CreateWindow("rgEngine", 5, 5, 650, 500, SDL_WINDOW_VULKAN);
+			w_window_ptr = SDL_CreateWindow("rgEngine", 5, 5, w_current_width, w_current_height, SDL_WINDOW_VULKAN);
 #endif
 			SDL_assert(w_window_ptr);
 
 			Render::InitializeBackend();
+
 			Render::Swapbuffers();
 
 			SDL_Delay(500);
@@ -75,8 +76,9 @@ namespace Engine {
 			}
 
 //			String gl_v = (String)glGetString(GL_VERSION);
-
+#if defined(R_OPENGL_RENDERER)
 			SDL_SetWindowSize(w_window_ptr, w_current_width, w_current_height);
+#endif
 			SDL_SetWindowPosition(w_window_ptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 			Render::ViewportBackend(0, 0, w_current_width, w_current_height);
 			Render::Swapbuffers();
@@ -84,7 +86,6 @@ namespace Engine {
 			ImGui::CreateContext();
 			ImGuiIO& io = ImGui::GetIO(); (void)io;
 			ImGui::StyleColorsLight();
-
 			Render::MakeImguiBackend();
 		}
 

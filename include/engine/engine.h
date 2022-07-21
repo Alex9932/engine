@@ -45,9 +45,9 @@
 #endif
 
 #ifdef RG_ENV64
-#define RG_CASTADDR(a) ((void*)(Uint64)a)
+#define RG_CASTADDR(a) ((void*)(Uint64)(a))
 #else
-#define RG_CASTADDR(a) ((void*)a)
+#define RG_CASTADDR(a) ((void*)(a))
 #endif
 
 
@@ -90,7 +90,8 @@ namespace Engine {
 			virtual void MainUpdate() {}
 			virtual void Initialize() {}
 			virtual void Quit() {}
-			bool isClient();
+			RG_INLINE bool isClient() { return is_client; }
+			virtual String GetName() { return "unnamed"; }
 	};
 
 	RG_DECLSPEC void Initialize(BaseGame& game);
@@ -115,7 +116,6 @@ namespace Engine {
 
 	RG_DECLSPEC String GetEngineVersion();
 	RG_DECLSPEC String GetEnginePlatform();
-	RG_DECLSPEC String GetGLInfo();
 	RG_DECLSPEC String GetUsername();
 
 	RG_DECLSPEC UTF8Decoder* GetUTF8Decoder();

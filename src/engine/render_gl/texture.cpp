@@ -12,7 +12,7 @@ namespace Engine {
 
 		GLTexture::GLTexture(const TextureInfo& info) : Texture(info) {
 
-			GLint in_format;
+			GLint in_format = GL_RED;
 			if(info.type == DATATYPE_FLOAT) {
 				switch (info.format) {
 					case FORMAT_R:
@@ -59,7 +59,7 @@ namespace Engine {
 				type = GL_UNSIGNED_BYTE;
 			}
 
-			GLint filter;
+			GLint filter = GL_NEAREST;
 			switch (info.filter) {
 				case FILTER_NEAREST:
 					filter = GL_NEAREST;

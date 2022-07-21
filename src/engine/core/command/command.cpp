@@ -12,6 +12,8 @@
 #include <engine/core/event.h>
 #include <engine/core/allocator.h>
 
+#include <engine/render/r_backend.h>
+
 #define RG_COMMAND_QUIT_STR       "quit"
 #define RG_COMMAND_RG_INFO_STR    "rg_info"
 #define RG_COMMAND_RG_MEMDUMP_STR "rg_memdump"
@@ -38,7 +40,7 @@ namespace Engine {
 				Quit();
 			} else if(Helper::streql(str, RG_COMMAND_RG_INFO_STR)) {
 				rgLogInfo(RG_LOG_SYSTEM, "rg_engine v%s on %s", GetEngineVersion(), GetEnginePlatform());
-				rgLogInfo(RG_LOG_SYSTEM, "OpenGL: %s", GetGLInfo());
+				rgLogInfo(RG_LOG_SYSTEM, "%s: %s", Render::GetRendererName(), Render::GetRendererDescription());
 			} else if(Helper::streql(str, RG_COMMAND_RG_MEMDUMP_STR)) {
 				rgLogInfo(RG_LOG_SYSTEM, "rg_engine Memory allocators info");
 				Allocator** allocators = GetAllocators();

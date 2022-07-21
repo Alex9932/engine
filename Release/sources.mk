@@ -27,9 +27,10 @@ imgui \
 src/engine/core \
 src/engine/core/command \
 src/engine/core/math \
-src/engine/core/thread \
 src/engine \
 src/engine/level \
 src/engine/render \
+src/engine/render_gl \
+src/engine/render_vk \
 src/engine/sound \
 
